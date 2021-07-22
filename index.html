@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+ <head>
+	<!-- Load plotly.js into the DOM -->
+	<script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js'></script>
+
+	<!-- Setting up the HTML -->
+    <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Twiiter Data Visualization</title>
+  <meta name="author" content="Chau Nguyen">
+  <meta name="description" content="Twitter Data Visualization">
+  <meta name="keywords" content="Twitter,data">
+  <link rel="stylesheet" href="stylesheet.css" type="text/css">
+  </head>
+
+ <body>
+	<div class="bg">
+		<div class="flex-container" id = "flex-container">
+		  <h5>"President Trump is a ratings hit. Since reviving the daily White House
+			  briefing Mr. Trump and his coronavirus updates have attracted an 
+			  average audience of 8.5 million on cable news, roughly the viewership 
+			  of the season finale of, The Bachelor. Numbers are continuing to rise..."
+			  (@realDonaldTrump)</h5>
+		</div>
+	</div>	
+		
+	<div class='container'>
+		<h1> How America's most controversial President uses Twitter </h1>
+
+			<p>	Donald Trump is perhaps America's most controversial President. 
+				When talking about Trump, it would be lacking to not mention 
+				his notorious Twitter. Trump is known for not shying away from 
+				using Twitter to express his personal opinions. Trump's tweets, 
+				many times that made the front page headlines or broke the Internet,
+				were considered even more official and viral compared to
+				the White House's statements. However, looking at some of Trump's tweets, 
+				I found some interesting inconsistencies in the ways he talks - or rather, 
+				tweets. Sometimes his Tweets appear very personal and subjective. 
+				Here is an example: </p>
+				
+				<img src="trump insult.png" alt="Trump's Tweet">
+
+			<p> Other times, his tweets appear quite neutral and objective, almost as
+			if they were written by someone else: </p>
+
+			<img src="trump tweet.png" alt="Trump's Tweet">
+
+			<p> This got me wondering: <em>Did Trump write all his tweets? Or could it
+				be someone else? Is there a way to know? </em> It is quite common 
+				for politicians to have staff responsible for social media 
+				communication, so perhaps Trump was not an exception. 
+
+				With data science, I was able to find the answer to the above questions. 
+				<h5>There were indeed staff and Trump himself who have access to the same 
+				Twitter @realDonaldTrump.</h5> How did I figure it out?
+			 	Let's take a look at the process. </p>
+
+			<p> I needed an extensive of Trump's twitter data, and fortunately
+				<a href="https://www.thetrumparchive.com/"> The Trump Archive</a> 
+				contains all the information I needed. I processed my data via Excel. 
+				The extensive dataset contains all Trump's tweets since 2012, 
+				their unique IDs, contents, time and date of posting, and 
+				interestingly, the devices they were posted from originally. 
+				To narrow down on unnecessary data, I filtered out retweets, 
+				posting that are outside of Trump's presidency (2016-2021), and 
+				those with little values (less than 30 favorites). As it turns out, 
+				Trump posted his Tweets from multiple devices over the course
+				of his presidency. I visualized the frequency of devices used over years
+				during Trump's administration. </p>
+			
+			<div id='myDiv1'></div>
+			<p> Android and iPhone tweets were most common, and after 2017 iPhone became
+				the main device. Looking closer at the time and date of the tweets, 
+				especially during 2016-2017, it appears that tweets were posted from both 
+				devices on many overlapping days, at different times and different frequencies.
+			</p>	
+			<div id='myDiv'></div>
+			
+			<p> Is it possible that Android and iPhone users are different people?
+				Another analysis into tweets' contents can confirm this. I looked into
+				the content differences in the iPhone and Android tweets. Most of the iPhone
+				tweets appear to be like announcements, with lots of hastags and image links:
+				
+				<div id='quotes'>
+					<h5>Just landed in North Carolina- heading to the J.S. Dorton Arena. See you all soon! 
+						Lets #MakeAmericaGreatAgain! https://t.co/EUo0keWX1Y</h5>
+						— Donald J. Trump (@realDonaldTrump) 
+						November 7, 2016
+				</div>
+
+			<p> While most of the Android tend to express personal statements:</p>
+
+				<div id='quotes'>
+					<h5>Are we talking about the same cyberattack where it was revealed that head 
+						of the DNC illegally gave Hillary the questions to the debate?</h5>
+						— Donald J. Trump (@realDonaldTrump) 
+						November 19, 2016
+				</div>	
+			<p> I sorted the data to see how often the iPhone/Android tweets
+				contain image links and hastags. I flitered tweets that contains
+				either "https" links or hastags, and then sorted them accordingly to
+				iPhone/Android devices. With the results collected, I created 
+				this bar graph via inforgram.  </p>
+
+				<script id="infogram_0_30f37398-02e9-47df-abdb-da63fe69da5a" 
+				title="Untitled slide project" src="https://e.infogram.com/js/dist/embed.js?p6D" 
+				type="text/javascript"></script><div style="padding:8px 0;font-family:Arial!important;font-size:13px!important;line-height:15px!important;text-align:center;border-top:1px solid #dadada;margin:0 30px"><a href="https://infogram.com/30f37398-02e9-47df-abdb-da63fe69da5a" style="color:#989898!important;text-decoration:none!important;" 
+					target="_blank"></a><br><a href="https://infogram.com" 
+					style="color:#989898!important;text-decoration:none!important;" target="_blank" 
+					rel="nofollow"></a></div>
+
+			<p> As demonstrated by the visualization, iPhone tweets contain a lot
+				more hastags and link redirects, and have more official, announcement-like
+				contents. Meanwhile, the Android ones appear to have mostly just personal statements,
+				with simple, informal language. </p>		
+
+			<p> Another way to prove the hypothesis is to compare the language and emotions behind the text.
+				I conducted a sentiment analysis - the interpretation 
+				and classification of human emotions (positive, negative and neutral) within text 
+				data. Using TextBlob, a Python library for sentiment analysis, I ran the Twitter's
+				contents as data inputs and was able to get some sentiment figures. The algorithm is 
+				not absolutely accurate, but it gives an idea of the emotions portrayed behind the tweets. 
+				The polarity scale goes from -1 being negative, 0 means neutral and 1 being positive sentiments. 
+				The subjectivity scale goes from -1 meaning very subjective to 1 being very objective. 
+			</p>
+			
+			<div class='textblob'>	
+				<p>Sentiment Analysis via TextBlob</p>
+				<img src="sentiment.png" alt="Sentiment Analysis via TextBlob">
+			</div>
+
+
+			<p>Below are the comparison of the iPhone versus Android sentiment visualizations. </p>
+		
+				<div id='myDiv2'style: height=100vh></div>
+				<div id='myDiv3'></div>
+
+			<p>It appears that tweets from Android devices are more negatively-skewed, while the 
+				iPhone tweets seem to be more neutral towards positive. The above sentiment analysis,
+				combined with the tweeting frequency, indicates that Android and iPhone tweets
+				are clearly from different people. This confirms our findings: The Android tweets 
+				are most likely written by Donald Trump himself, while iPhone tweets are likely 
+				to be written by staff for political campaigns or agenda purposes. </p>
+
+			<p> What about tweets after 2017, when the Android phone is no longer used?
+				How can we tell whether Trump or his staff wrote the Tweet? It is possible 
+				to tell the tweets' authors by comparing the similarity in language of Trump's Android 
+				tweets versus post-2017 iPhone tweets. Unfortunately, this is beyond my programming 
+				skills. Luckily there are intelligent algorithms 
+				that are particularly trained for this purpose, such as:</p>
+				
+			<div class='website'>	
+					<iframe src="http://didtrumptweetit.com/" width="100%" height="300" style="border:none;">
+					</iframe>
+			</div>
+			<p> Intelligent algorithms as above look into factors such as: language, 
+					connotation, use of links/hastags, writing style, frequent words, and sentiments to decide
+					how similar the Tweets are. The algorithms works by comparing the similarities among
+					the tweets. The more they belong into a cluster, the higher the likelihood
+					that they share the same author. After all, people can 
+					change their devices, but the way they tweet and communicate 
+					to the public stays the same. </p>
+
+			<p> Source: 
+				<li> The Trump Archive. Retrieved 11 June 2021, from https://www.thetrumparchive.com/</li>
+				<li> Did Trump Tweet It? Retrieved 20 June 2021, from http://didtrumptweetit.com/ </li>
+				<li> WayBack Machine RealDonalTrump Twitter Archive. Retrieved 15 June 2021, from http://web.archive.org/web/20200601000000*/https://twitter.com/realDonaldTrump </li>
+				<li> Variance Explained: Trump's Tweets. Retrieved 10 June 2021, from http://varianceexplained.org/r/trump-tweets/</li>
+
+	</div>
+
+
+	
+ <script src="file.js"></script>
+
+</body>
